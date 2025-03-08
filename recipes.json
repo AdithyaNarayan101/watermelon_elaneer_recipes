@@ -1,0 +1,39 @@
+[
+    {
+      "name": "Paneer Butter Masala",
+      "type": "recipe",
+      "ingredients": ["Paneer", "Tomato", "Onion", "Ginger-garlic paste", "Butter", "Cream", "Spices (Cumin, Coriander, Garam Masala)", "Kasuri Methi"],
+      "instructions": "1. Heat butter in a pan. 2. Add onions and cook until golden. 3. Add ginger-garlic paste and sauté. 4. Add tomatoes, cook until soft. 5. Add spices and cook for a minute. 6. Add paneer, cook for 5 minutes. 7. Add cream and kasuri methi, cook for 5 more minutes.",
+      "mealtype": ["Main Course"],
+      "date_first_cooked": "2005-02-15",
+      "review": "Rich and creamy curry with a delightful flavor."
+    },
+    {
+      "name": "Aloo Gobi",
+      "type": "recipe",
+      "ingredients": ["Potatoes", "Cauliflower", "Onion", "Tomato", "Ginger", "Garlic", "Turmeric", "Cumin", "Coriander", "Garam Masala"],
+      "instructions": "1. Heat oil in a pan and sauté cumin seeds. 2. Add onions and cook until soft. 3. Add ginger and garlic, cook for 2 minutes. 4. Add tomatoes and cook until soft. 5. Add potatoes, cauliflower, turmeric, and spices. 6. Cover and cook until vegetables are tender.",
+      "mealtype": ["Main Course"],
+      "date_first_cooked": "2010-06-10",
+      "review": "A comforting and flavorful dish that goes well with roti."
+    },
+    {
+      "name": "Thai Red Curry Noodles with Tofu",
+      "type": "recipe",
+      "ingredients": ["Hakka noodles","Tofu", "Coconut milk", "Vegetables","Ginger-Garlic","Soy sauce"],
+      "instructions": "1. Saute garlic, ginger, red chillis in oil <br> 2. Add vegetables <br> 3. Dhaniya, red chilli powder, tumeric, garlic powder <br> 4. Add coconut milk + soy sauce. <br> 5. Tofu air fry with corn flour, everything bagel, salt, garlic powder <br> 6. Add noodles and tofu, toss, and serve",
+      "mealtype": ["Lunch","Dinner"],
+      "date_first_cooked": "2025-03-07",
+      "review": "Cooked by R. R: (8/10) Loved it. Might swap Hakka noodles with Rice noodles. A: (9/10) Mass!"
+    },
+    {
+      "name": "Spice Delight",
+      "type": "restaurant",
+      "dishes": ["Navratna kumar", "Dal Tadka", "Paneer Butter Masala"],
+      "info": "Lawrenceville, Pittsburgh. Pickup/delivery only",
+      "date_visited":"2025-03-07",
+      "review": "Good food, homely, no kakoos problems. Amazing chapathi. Heard Soya biriyani is good. "
+    }
+    
+  ]
+  

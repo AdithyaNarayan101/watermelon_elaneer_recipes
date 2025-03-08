@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watermelon Elaneer Cookbook</title>
+    <style>
+        /* General page styles */
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #fdf6e3;
+            margin: 0;
+            padding: 0;
+            color: #4e4e4e;
+            box-sizing: border-box;
+        }
+
+        /* Page Header */
+        header {
+            background-color: #093624;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            font-size: 2.5rem;
+            font-family: 'Merriweather', serif;
+        }
+
+        /* Search Bar and Buttons Container */
+        .search-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin: 40px 0;
+        }
+
+        #search-input {
+            width: 300px;
+            padding: 12px;
+            font-size: 1.1rem;
+            border: 2px solid #efe6d5;
+            border-radius: 5px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        #search-input:focus {
+            border-color: #d86a5c;
+        }
+
+        .random-recipe-btn, .reset-btn {
+            background-color: #093624;
+            color: white;
+            font-size: 1.2rem;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .random-recipe-btn:hover, .reset-btn:hover {
+            background-color: #d86a5c;
+        }
+
+        /* Recipe and Restaurant Meal Cards Section */
+        .recipe-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            justify-items: center;
+        }
+
+        /* Recipe/Meal Card Styles */
+        .recipe {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 100%;
+            max-width: 300px;
+            transition: transform 0.3s;
+        }
+
+        .recipe:hover {
+            transform: translateY(-5px);
+        }
+
+        .recipe h3 {
+            color: white;
+            padding: 15px;
+            margin: 0;
+            text-align: center;
+            font-size: 1.5rem;
+            cursor: pointer; /* Make the recipe name clickable */
+        }
+
+        .recipe p {
+            padding: 15px;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .recipe p strong {
+            color: #093624;
+        }
+
+        /* Recipe Color */
+        .recipe h3.recipe-header {
+            background-color: #008f9b; /* Red for recipe */
+        }
+
+        /* Restaurant Meal Color */
+        .recipe h3.restaurant-header {
+            background-color: #f4b400; /* Yellow for restaurant meal */
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            #search-input {
+                width: 80%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 onclick="resetPage()">Watermelon Elaneer Cookbook</h1>
+        <p>Answers to the only question that matters: What to eat?</p>
+    </header>
+
+    <!-- Search Bar and Buttons Container -->
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="Search for recipes..." onkeyup="searchRecipes()">
+        <button class="random-recipe-btn" onclick="randomRecipe()">Get a Random Recipe</button>
+        <button class="reset-btn" onclick="resetPage()">Reset</button>
+    </div>
+
+    <div class="recipe-container" id="recipe-container">
+        <!-- Recipes and Restaurant Meals will be loaded here -->
+    </div>
+
+    <script>
+        let recipes = [];  // This will store the recipes and restaurant meals loaded from the JSON file
+
+        // Function to reset the page (clear search and show all recipes)
+        function resetPage() {
+            document.getElementById('search-input').value = '';  // Clear the search input
+            displayRecipes(recipes);  // Display all recipes again
+        }
+
+        // Function to shuffle the recipes array (randomize order)
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+            }
+        }
+
+        // Function to display recipes and restaurant meals
+        function displayRecipes(recipesToDisplay) {
+            const container = document.getElementById('recipe-container');
+            container.innerHTML = '';  // Clear any previous results
+
+            // Shuffle recipes before displaying
+            shuffleArray(recipesToDisplay);
+
+            recipesToDisplay.forEach(recipe => {
+                const recipeElement = document.createElement('div');
+                recipeElement.classList.add('recipe');
+
+                if (recipe.type === "recipe") {
+                    // Regular recipe display
+                    recipeElement.innerHTML = `
+                        <h3 class="recipe-header" onclick="displaySingleRecipe('${recipe.name}')">${recipe.name} (Recipe)</h3>
+                        <p><strong>Ingredients:</strong> ${recipe.ingredients.join(', ')}</p>
+                        <p><strong>Instructions:</strong> ${recipe.instructions}</p>
+                        <p><strong>Meal type:</strong> ${recipe.mealtype.join(', ')}</p>
+                        <p><strong>Date First Cooked:</strong> ${recipe.date_first_cooked}</p>
+                        <p><strong>Review:</strong> ${recipe.review}</p>
+                    `;
+                } else if (recipe.type === "restaurant") {
+                    // Restaurant meal display
+                    recipeElement.innerHTML = `
+                        <h3 class="restaurant-header" onclick="displaySingleRecipe('${recipe.name}')">${recipe.name} (Restaurant Meal)</h3>
+                        <p><strong>Dishes:</strong> ${recipe.dishes.join(', ')}</p>
+                        <p><strong>Info:</strong> ${recipe.info}</p>
+                        <p><strong>Date visited:</strong> ${recipe.date_visited}</p>
+                        <p><strong>Review:</strong> ${recipe.review}</p>
+                    `;
+                }
+
+                container.appendChild(recipeElement);
+            });
+        }
+
+        // Function to display only the clicked recipe (as if it was searched)
+        function displaySingleRecipe(name) {
+            const selectedRecipe = recipes.filter(recipe => recipe.name === name);
+            displayRecipes(selectedRecipe); // Only display the clicked recipe
+        }
+
+        // Function to search recipes and restaurant meals
+        function searchRecipes() {
+            const searchInput = document.getElementById('search-input').value.toLowerCase();
+            const filteredRecipes = recipes.filter(recipe => 
+                recipe.name.toLowerCase().includes(searchInput) || 
+                (recipe.ingredients && recipe.ingredients.some(ingredient => ingredient.toLowerCase().includes(searchInput))) ||
+                (recipe.mealtype && recipe.mealtype.some(mealtype => mealtype.toLowerCase().includes(searchInput)) ||
+                recipe.dishes && recipe.dishes.some(dish => dish.toLowerCase().includes(searchInput)))
+            );
+            displayRecipes(filteredRecipes);
+        }
+
+        // Function to display a random recipe or restaurant meal
+        function randomRecipe() {
+            const randomIndex = Math.floor(Math.random() * recipes.length);
+            const randomRecipe = [recipes[randomIndex]];
+            displayRecipes(randomRecipe);
+        }
+
+        // Load the recipes and restaurant meals from the external JSON file
+        fetch('recipes.json')
+            .then(response => response.json())
+            .then(data => {
+                recipes = data;  // Store the recipes and restaurant meals data in the `recipes` variable
+                displayRecipes(recipes);  // Display the recipes and restaurant meals on page load
+            })
+            .catch(error => {
+                console.error('Error loading recipes:', error);
+            });
+    </script>
+
+</body>
+</html>
